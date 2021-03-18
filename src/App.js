@@ -15,12 +15,12 @@ const App = (props) => {
   const [cardData, setCardData] = useState([])
   const [callApi, setCallApi] = useState(false)
 
-  // useEffect(()=> {
-  //   debugger
-  //   axios.get(apiURL)
-  //   .then(res => setCardData(res.data))
+  useEffect(()=> {
+    debugger
+    axios.get(apiURL)
+    .then(res => setCardData(res.data))
   
-  // }, [])//[] -> componentDidMount
+  }, [])//[] -> componentDidMount
 
   // useEffect(()=> {
   //   console.log("Called when callApi is changed", callApi )
@@ -28,20 +28,20 @@ const App = (props) => {
   
   // }, [callApi])//[callApi] -> callApi ->shoulComponentUpdate
 
-    useEffect(()=> {
-    debugger
-    axios.get(apiURL)
-    .then(res => setCardData(res.data))
+    // useEffect(()=> {
+    // debugger
+    // axios.get(apiURL)
+    // .then(res => setCardData(res.data))
   
-  })// -> componentDidMount & componentDidUpdate
+  //})// -> componentDidMount & componentDidUpdate
 
 
-  useEffect(()=> {
-    () => {
-      /**Clean UP */
-    }
+  // useEffect(()=> {
+  //   () => {
+  //     /**Clean UP */
+  //   }
   
-  }, [])//-> componentWillUnMount
+  // }, [])//-> componentWillUnMount
 
 
   console.log("Call Before Return")
