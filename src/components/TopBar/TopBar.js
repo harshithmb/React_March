@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const TopBar = () => {
     return ( <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -16,17 +17,30 @@ const TopBar = () => {
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a className="nav-link active" aria-current="page" href="#">Home</a>
+            <Link to="/about">
+              <span className="nav-link active">Home</span>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">Features</a>
+          <Link to="/contact">
+              <span className="nav-link active">Contact</span>
+            </Link>
           </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#">Pricing</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-          </li>
+          <li>
+          <Link to={{pathname: "/user/1", testValue: "Hello", showValue: true}}>
+              <span className="nav-link active">Users</span>
+            </Link>
+            </li>
+            <li>
+          <Link to="/signin" >
+              <span className="nav-link active">Sign In</span>
+            </Link>
+            </li>
+            <li>
+          <Link to="/signup">
+              <span className="nav-link active">Sign Up</span>
+            </Link>
+            </li>
         </ul>
       </div>
     </div>

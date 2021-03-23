@@ -1,200 +1,209 @@
-import React, { Component, useEffect, useState } from 'react';
+import React from 'react';
+import {BrowserRouter, Switch, Route, useParams} from "react-router-dom"
 import TopBar from './components/TopBar/TopBar';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Banner from './components/Banner/Banner';
-import Card from './components/Card/Card';
-import { NAME, cardData as cardDataAPI } from "./commonData";
-import axios from 'axios';
+import 'antd/dist/antd.css'; // Antd Css
+import 'bootstrap/dist/css/bootstrap.min.css';// bootstrap
+import Banner from "./components/Banner/Banner"
+import SignIn from './components/SignIn/SignIn';
+import SignUp from './components/SignUp/SignUp';
 
-
-const apiURL = "https://5d76bf96515d1a0014085cf9.mockapi.io/product"
-
-const App = (props) => {
-
-  const [userName, setUserName] = useState(NAME)
-  const [cardData, setCardData] = useState([])
-  const [callApi, setCallApi] = useState(false)
-
-  useEffect(()=> {
-    debugger
-    axios.get(apiURL)
-    .then(res => setCardData(res.data))
-  
-  }, [])//[] -> componentDidMount
-
-  // useEffect(()=> {
-  //   console.log("Called when callApi is changed", callApi )
-  //   debugger
-  
-  // }, [callApi])//[callApi] -> callApi ->shoulComponentUpdate
-
-    // useEffect(()=> {
-    // debugger
-    // axios.get(apiURL)
-    // .then(res => setCardData(res.data))
-  
-  //})// -> componentDidMount & componentDidUpdate
-
-
-  // useEffect(()=> {
-  //   () => {
-  //     /**Clean UP */
-  //   }
-  
-  // }, [])//-> componentWillUnMount
-
-
-  console.log("Call Before Return")
-  return ( <div>
+const App = () => {
+  return ( 
+  <BrowserRouter>
+  <div>
     <TopBar/>
-    <Banner
-      title={`Welcome ${userName}`}
-      description="Shop here"
-      />
+    {/* <Banner
+      title="Welcome to Routing"
+      description="We will be using BrowserRouter, Switch, Route, Link"
+    /> */}
+    <Switch>
+      <Route exact path="/"  component={Home}/>
+      <Route  path="/about"  component={About}/>
+      <Route  path="/contact"  component={Contact}/>
+      <Route  exact path="/users"  component={Users}/>
+      <Route  path="/user/:userId"  component={UserDetails}/>
+      <Route path="/signin" render={(props) => <SignIn {...props} name={"Details for Sign IN"}/>}/>
+      <Route path="/signup" component={SignUp}/>
+      <Route component={() => <h1>Page Not Found</h1>}/>
 
-      <button onClick={() => setCallApi(!callApi)}>
-        Change CALL API 
-        </button>
-
-
-      <div className="d-flex container justify-content-between">
-        {cardData?.map((card, index) => <Card
-          data={card}
-          key={index}
-          changeName={
-            (name) =>
-              this.setState({
-                userName: name
-              })}
-        />)}
-    </div>
-  </div> );
+    </Switch>
+  </div>
+  </BrowserRouter> );
 }
-
+ 
 export default App;
 
-//Mounting
-//updating
-//UnMounting
+
+const About = () => {
+  return ( <h1>About Page</h1> );
+}
+const Home = () => {
+  return ( <h1>Home Page</h1> );
+}
+const Contact = () => {
+  return ( <h1>Contact Page</h1> );
+}
+const Users = () => {
+  return ( <h1>Users Page</h1> );
+}
+ 
+const UserDetails = (props) => {
+  const {userId} = useParams()
+  debugger
+  return ( <h1>User Details {userId}</h1> );
+}
+ 
 
 
-// class App extends Component {
+
+
+// import React, { Component } from 'react';
+
+// class ClassApp extends Component {
 //   constructor(props) {
 //     super(props);
 //     this.state = {
-//       userName: "Nikhil",
-//       cardData: [],
-//       showLoader: true,
-//       showJumbo: true
-//     }
-//     console.log("First Call - Constructor")
-//   }
-
-//   componentDidMount() {
-//     //call ur API
-//     console.log("componentDidMount - Mounting PHASE called only 1st Render")
-//     axios
-//       .get("https://5fc38a07e5c28f0016f54b09.mockapi.io/ajay/shoplane")
-//       .then(response => {
-//         this.setState({ cardData: response.data, showLoader: false })
-//       }
-//       )
-//   }
-
-//   shouldComponentUpdate(nextProps, nextState) {
-//     console.log("shouldComponentUpdate - UPDATING PHASE 1st CALL")
-//     if (nextState.userName === "Men Navy Blue Solid Sweatshirt") {
-//       return true
-//     } else {
-//       return true
+//       count: 0
 //     }
 //   }
+// // Mounting
+// //Constructor -> render -> componentDidMount
 
-//   componentDidUpdate(nextProps,  nextState, snapshot) {
-//     //Call API
-//     console.log("componentDidUpdate every time ur component gets updated")
-//   }
+// //Updating
+// // shouldComponentUpdate ->  getSnapshotBeforeUpdate -> JSX -> compoentDidUpdate
 
-//   getSnapshotBeforeUpdate
+// //UnMounting
+// //componentWillUnMount
 
-//   render() {
-//     let { userName, cardData, showLoader, showJumbo } = this.state;
-//     console.log("Second Call - Render")
-//     return (<div>
-//       <TopBar />
-//       <Banner
-//         title={`Welcome ${userName}`}
-//         description="Shop here to get Good products"
-//       />
-//       <button
-//         className="btn-primary m-2"
-//         onClick={() => this.setState({ showJumbo: true })}
-//       >
-//         Show Jumbotron
-//       </button>
+//   // componentDidMount(){
 
-//       <button
-//         className="btn-secondary"
-//         onClick={() => this.setState({ showJumbo: false })}
-//       >
-//         Hide Jumbotron`
-//       </button>
+//   // }
 
-//       {showJumbo && <Jumbotron
-//         title={userName}
-//         description="Hello Jumbotron Class Based Component"
-//       />}
+  
 
-//       <div className="d-flex container justify-content-between row">
 
-//         {/* //12 grid col-4 col-3 */}
-//         {showLoader && <h1>Loading...</h1>}
-//         {cardData.map((card, index) => <Card
-//           data={card}
-//           key={index}
-//           changeName={
-//             (name) =>
-//               this.setState({
-//                 userName: name
-//               })}
-//         />)}
-//       </div>
-
-//     </div>);
-//   }
-// }
-
-// export default App;
-
-// class Jumbotron extends Component {// CHild Component
-//   constructor(props) {
-//     super(props);
-//     this.state = {}
-//     console.log("First Call - Constructor Child Component")
-//   }
-
-//   componentDidMount() {
-//     console.log("Third Call - componentDidMount Child Component")
-//   }
-
-//   shouldComponentUpdate(nextProps, nextState) {
-//     console.log("shouldComponentUpdate - UPDATING PHASE 1st CALL Child Component")
-//     if (nextProps.title === "Men Navy Blue Solid Sweatshirt") {
+//   shouldComponentUpdate(nextProps, nextState){
+//     if(nextState.count < 0){
 //       return false
-//     } else {
-//       return true
-//     }
-//   }
-//   componentWillUnmount() {
-//     console.log("Called before ur component dies")
+//     }else return true
 //   }
 
 //   render() {
-//     let { title, description } = this.props
-//     console.log("Second Call - render Child Component")
-//     return (<div className="jumbotron">
-//       <h1 className="display-4">{title}</h1>
-//       <p className="lead">{description}</p>
+//     let { count } = this.state
+//     return (<div>
+//       <h1>Class Component</h1>
+//       <button
+//       onClick={() => this.setState({count: count-1})}
+//       >-</button>
+
+//       <button
+//         onClick={() => this.setState({count: count+1})}
+//       >
+//         +
+//       </button>
+//       <hr />
+//       <Func 
+//         count={count} 
+//         incrementCount={() => this.setState({count: count+1})}
+//       />
+
 //     </div>);
 //   }
 // }
+
+// export default ClassApp;
+
+
+// const Func = ({ count, incrementCount }) => { // Child
+//   return (<div>
+//     <h2>Functional Component {count}</h2>
+//     <button
+//       onClick={() => incrementCount()}
+//     >Click Me to Increment</button>
+//   </div>);
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // import axios from 'axios';
+// // import 'antd/dist/antd.css'; // Antd Css
+// // import 'bootstrap/dist/css/bootstrap.min.css';// bootstrap
+// // import { Layout, Menu, Breadcrumb } from 'antd';
+// // import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+// // import FormSizeDemo from './components/Form';
+
+
+// // const { SubMenu } = Menu;
+// // const { Header, Content, Footer, Sider } = Layout;
+
+// // const App = () => {
+// //   return ( 
+// //     <Layout>
+// //     <Header className="header">
+// //       <div className="logo" />
+// //       <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+// //         <Menu.Item key="1">nav 1</Menu.Item>
+// //         <Menu.Item key="2">nav 2</Menu.Item>
+// //         <Menu.Item key="3">nav 3</Menu.Item>
+// //       </Menu>
+// //     </Header>
+// //     <Content style={{ padding: '0 50px' }}>
+// //       <Breadcrumb style={{ margin: '16px 0' }}>
+// //         <Breadcrumb.Item>Home</Breadcrumb.Item>
+// //         <Breadcrumb.Item>List</Breadcrumb.Item>
+// //         <Breadcrumb.Item>App</Breadcrumb.Item>
+// //       </Breadcrumb>
+// //       <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
+// //         <Sider className="site-layout-background" width={200}>
+// //           <Menu
+// //             mode="inline"
+// //             defaultSelectedKeys={['1']}
+// //             defaultOpenKeys={['sub1']}
+// //             style={{ height: '100%' }}
+// //           >
+// //             <SubMenu key="sub1" icon={<UserOutlined />} title="subnav 1">
+// //               <Menu.Item key="1">option1</Menu.Item>
+// //               <Menu.Item key="2">option2</Menu.Item>
+// //               <Menu.Item key="3">option3</Menu.Item>
+// //               <Menu.Item key="4">option4</Menu.Item>
+// //             </SubMenu>
+// //             <SubMenu key="sub2" icon={<LaptopOutlined />} title="subnav 2">
+// //               <Menu.Item key="5">option5</Menu.Item>
+// //               <Menu.Item key="6">option6</Menu.Item>
+// //               <Menu.Item key="7">option7</Menu.Item>
+// //               <Menu.Item key="8">option8</Menu.Item>
+// //             </SubMenu>
+// //             <SubMenu key="sub3" icon={<NotificationOutlined />} title="subnav 3">
+// //               <Menu.Item key="9">option9</Menu.Item>
+// //               <Menu.Item key="10">option10</Menu.Item>
+// //               <Menu.Item key="11">option11</Menu.Item>
+// //               <Menu.Item key="12">option12</Menu.Item>
+// //             </SubMenu>
+// //           </Menu>
+// //         </Sider>
+// //         <Content style={{ padding: '0 24px', minHeight: 280 }}>
+
+// //         <FormSizeDemo/>
+// //         </Content>
+// //       </Layout>
+// //     </Content>
+// //     <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+// //   </Layout>
+// //    );
+// // }
+
+// // export default App;
