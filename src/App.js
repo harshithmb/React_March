@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';// bootstrap
 import Banner from "./components/Banner/Banner"
 import SignIn from './components/SignIn/SignIn';
 import SignUp from './components/SignUp/SignUp';
+import Home from './components/Home/Home';
 
 const App = () => {
   return ( 
@@ -37,9 +38,7 @@ export default App;
 const About = () => {
   return ( <h1>About Page</h1> );
 }
-const Home = () => {
-  return ( <h1>Home Page</h1> );
-}
+
 const Contact = () => {
   return ( <h1>Contact Page</h1> );
 }
