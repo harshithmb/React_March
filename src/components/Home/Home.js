@@ -1,5 +1,9 @@
 
-import React from 'react';
+
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { getShopLane } from '../../commonData';
+import Card from "../Card/Card";
 
 const Button = ({onClick, text, style}) => <button 
                                                 onClick={onClick} 
@@ -19,12 +23,32 @@ const buttonWithStyle = (CompParams) => {
 
 const NewButton = buttonWithStyle(Button)
 
-const Home = () => {
+const Home = (props) => {
+    const [shopData, setShopData] = useState([])
+
+    useEffect(() => {
+        axios.get(getShopLane).then((res) =>
+         setShopData(res.data)
+        )
+    }, [])
+
     return ( <> 
 
         <h1>Home Page...</h1>
         <Button text="No Style" onClick onMouseEnter/>
         <NewButton text="Styled Button" style={{backgroundColor: "yellow"}}onClick={() => console.log("Clicked Styled")}/>
+    
+    <div className="d-flex ">
+    {
+        shopData?.map((item, index) => <Card 
+            data={item}
+            index={index}
+        />)
+    }
+    </div>
+        
+    
+    
     </> );
 }
  
