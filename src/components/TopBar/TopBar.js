@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {connect} from 'react-redux';
 
-const TopBar = () => {
+const TopBar = (props) => {
+
     return ( <nav className="navbar navbar-expand-lg navbar-light bg-light">
     <div className="container-fluid">
     <img 
@@ -41,10 +43,45 @@ const TopBar = () => {
               <span className="nav-link active">Sign Up</span>
             </Link>
             </li>
+
+            <li>
+          <Link to="/cart">
+              <span className="nav-link active">Cart - {props?.cart.length}<i></i>  <strong>{props?.userName}</strong></span>
+            </Link>
+            </li>
         </ul>
       </div>
     </div>
   </nav> );
 }
+
+const mapStateToProps = store => ({
+  cart: store?.cart,
+  userName: store?.userName
+})
  
-export default TopBar;
+export default connect(mapStateToProps, null)(TopBar);
+
+//rcredux
+// import React, { Component } from 'react'
+// import { connect } from 'react-redux'
+
+// export class TopBar extends Component {
+//   render() {
+//     return (
+//       <div>
+        
+//       </div>
+//     )
+//   }
+// }
+
+// const mapStateToProps = (state) => ({
+  
+// })
+
+// const mapDispatchToProps = {
+  
+// }
+
+// export default connect(mapStateToProps, mapDispatchToProps)(TopBar)
